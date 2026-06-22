@@ -1,3 +1,33 @@
-%% Placeholder architecture diagram
-flowchart LR
-    A[Placeholder] --> B[Replace with real diagram]
+flowchart TB
+
+    subgraph RG["Resource Group"]
+        
+        subgraph VNet["Virtual Network"]
+            Subnet["Subnet"]
+        end
+
+        subgraph VM["Virtual Machine"]
+            NIC["Network Interface"]
+            Disk["Managed OS Disk"]
+            Ext["VM Extension (Custom Script)"]
+            Identity["System-Assigned Managed Identity"]
+        end
+
+        NSG["Network Security Group"]
+        SA["Storage Account (Boot Diagnostics)"]
+        PE["Private Endpoint (Storage Access)"]
+        KV["Key Vault (Secrets for VM)"]
+
+    end
+
+    %% Connections
+    Subnet --> NIC --> VM
+    VM --> Disk
+    VM --> Ext
+    VM --> Identity
+
+    Subnet --> NSG
+    SA --> PE --> Subnet
+    Identity --> KV
+    VM --> SA
+
